@@ -1,21 +1,29 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 
-type Theme = "dark" | "light" | "system";
+type ThemeColor = 
+  | "light" 
+  | "dark" 
+  | "jellyfish" 
+  | "dracula" 
+  | "github" 
+  | "nord" 
+  | "sunset"
+  | "forest";
 
 type ThemeProviderProps = {
   children: React.ReactNode;
-  defaultTheme?: Theme;
+  defaultTheme?: ThemeColor;
   storageKey?: string;
 };
 
 type ThemeProviderState = {
-  theme: Theme;
-  setTheme: (theme: Theme) => void;
+  theme: ThemeColor;
+  setTheme: (theme: ThemeColor) => void;
 };
 
 const initialState: ThemeProviderState = {
-  theme: "system",
+  theme: "light",
   setTheme: () => null,
 };
 
@@ -23,35 +31,39 @@ const ThemeProviderContext = createContext<ThemeProviderState>(initialState);
 
 export function ThemeProvider({
   children,
-  defaultTheme = "system",
+  defaultTheme = "light",
   storageKey = "ui-theme",
   ...props
 }: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme>(
-    () => (localStorage.getItem(storageKey) as Theme) || defaultTheme
+  const [theme, setTheme] = useState<ThemeColor>(
+    () => (localStorage.getItem(storageKey) as ThemeColor) || defaultTheme
   );
 
   useEffect(() => {
     const root = window.document.documentElement;
+    const themeColors = [
+      "light",
+      "dark",
+      "jellyfish",
+      "dracula",
+      "github",
+      "nord",
+      "sunset",
+      "forest",
+    ];
 
-    root.classList.remove("light", "dark");
+    // Remove all existing theme classes
+    themeColors.forEach((color) => {
+      root.classList.remove(color);
+    });
 
-    if (theme === "system") {
-      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
-        .matches
-        ? "dark"
-        : "light";
-
-      root.classList.add(systemTheme);
-      return;
-    }
-
+    // Add the new theme class
     root.classList.add(theme);
   }, [theme]);
 
   const value = {
     theme,
-    setTheme: (theme: Theme) => {
+    setTheme: (theme: ThemeColor) => {
       localStorage.setItem(storageKey, theme);
       setTheme(theme);
     },

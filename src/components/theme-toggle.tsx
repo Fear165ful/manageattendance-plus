@@ -1,21 +1,55 @@
 
-import { Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Moon, Sun, Palette } from "lucide-react";
 import { useTheme } from "@/providers/theme-provider";
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
 
   return (
-    <Button
-      variant="ghost"
-      size="icon"
-      onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-      className="animate-fade-in"
-    >
-      <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-      <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-      <span className="sr-only">Toggle theme</span>
-    </Button>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" size="icon" className="animate-fade-in">
+          {theme === "light" && <Sun className="h-5 w-5" />}
+          {theme === "dark" && <Moon className="h-5 w-5" />}
+          {theme !== "light" && theme !== "dark" && (
+            <Palette className="h-5 w-5" />
+          )}
+          <span className="sr-only">Toggle theme</span>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuItem onClick={() => setTheme("light")}>
+          Light
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("dark")}>
+          Dark
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("jellyfish")}>
+          Jellyfish
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("dracula")}>
+          Dracula
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("github")}>
+          GitHub
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("nord")}>
+          Nord
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("sunset")}>
+          Sunset
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("forest")}>
+          Forest
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
