@@ -88,12 +88,12 @@ const AttendancePage = () => {
   };
 
   const columns = [
-    { header: "ID", accessorKey: "studentId" },
-    { header: "Name", accessorKey: "name" },
-    { header: "Grade", accessorKey: "grade" },
+    { header: "ID", accessorKey: "studentId" as keyof Student },
+    { header: "Name", accessorKey: "name" as keyof Student },
+    { header: "Grade", accessorKey: "grade" as keyof Student },
     {
       header: "Attendance",
-      accessorKey: "id",
+      accessorKey: "id" as keyof Student,
       cell: (student: Student) => (
         <div className="flex gap-2">
           <Button
