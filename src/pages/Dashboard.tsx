@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import {
@@ -13,6 +12,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
+import AttendancePage from "./attendance";
 
 const SIDEBAR_LINKS = [
   { icon: LayoutDashboard, label: "Overview", path: "" },
@@ -68,7 +68,10 @@ const Dashboard = () => {
       <main className="flex-1 p-8 overflow-auto">
         <Routes>
           <Route path="/" element={<div>Overview Dashboard</div>} />
-          <Route path="/attendance" element={<div>Attendance Page</div>} />
+          <Route
+            path="/attendance/*"
+            element={<AttendancePage />}
+          />
           <Route path="/assignments" element={<div>Assignments Page</div>} />
           <Route path="/ratings" element={<div>Ratings Page</div>} />
           <Route path="/dues" element={<div>Dues Page</div>} />
